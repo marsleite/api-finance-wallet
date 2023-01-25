@@ -1,6 +1,6 @@
 CREATE TABLE user (
     id INTEGER(11) NOT NULL AUTO_INCREMENT,
-    user_name VARCHAR(11) NOT NULL,
+    name VARCHAR(11) NOT NULL,
     email VARCHAR(100) NOT NULL,
     password VARCHAR(20) NOT NULL,
     create_at DATETIME NOT NULL,
@@ -15,14 +15,22 @@ CREATE TABLE categories (
 );
 
 CREATE TABLE transactions(
+   id INTEGER(11) NOT NULL AUTO_INCREMENT,
+   history_date DATETIME NOT NULL,
+   description VARCHAR(255) NOT NULL,
+   value_in DECIMAL(10,2) NOT NULL,
+   value_debit DECIMAL(10,2) NOT NULL,
+   id_categories INTEGER(11) NOT NULL,
+   id_user INTEGER(11) NOT NULL,
+   PRIMARY KEY (id),
+   FOREIGN KEY (id_categories) REFERENCES categories(id),
+   FOREIGN KEY (id_user) REFERENCES user(id)
+);
+
+CREATE TABLE account (
     id INTEGER(11) NOT NULL AUTO_INCREMENT,
-    date DATETIME NOT NULL,
-    description VARCHAR(255) NOT NULL,
-    total_value DECIMAL(10,2) NOT NULL,
-    types ENUM('entrada', 'saida') NOT NULL,
-    id_categories INTEGER(11) NOT NULL,
     id_user INTEGER(11) NOT NULL,
+    saldo DECIMAL(10,2) NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (id_categories) REFERENCES categories(id),
     FOREIGN KEY (id_user) REFERENCES user(id)
 );
